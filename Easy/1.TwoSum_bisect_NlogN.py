@@ -1,7 +1,6 @@
-'''
-Runtime : 101ms, 44.55%
-Memory : 15.9MB
-'''
+# Runtime : 101ms, 44.55%
+# Memory : 15.9MB
+
 class Solution:
     def twoSum(self, nums: List[int], target: int) -> List[int]:
         from bisect import bisect, bisect_left

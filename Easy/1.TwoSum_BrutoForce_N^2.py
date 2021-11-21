@@ -1,7 +1,6 @@
-'''
-Runtime : 5303ms, 10.46%
-Memory : 15MB
-'''
+# Runtime : 5303ms, 10.46%
+# Memory : 15MB
+
 class Solution:
     def twoSum(self, nums: List[int], target: int) -> List[int]:
         n = len(nums)

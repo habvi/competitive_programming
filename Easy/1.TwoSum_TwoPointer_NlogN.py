@@ -1,7 +1,6 @@
-'''
-Runtime : 68ms, 55.49%
-Memory : 15.8MB
-'''
+# Runtime : 68ms, 55.49%
+# Memory : 15.8MB
+
 class Solution:
     def twoSum(self, nums: List[int], target: int) -> List[int]:
         ordered_nums = [(num, i) for i, num in enumerate(nums)]
