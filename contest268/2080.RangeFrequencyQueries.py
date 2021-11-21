@@ -5,7 +5,6 @@ from collections import defaultdict
 from bisect import bisect, bisect_left
 
 class RangeFreqQuery:
-
     def __init__(self, arr: List[int]):
         self.arr = arr
         self.counts = defaultdict(list)
