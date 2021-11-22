@@ -1,5 +1,6 @@
 # Runtime : 68m, 59.35%
 # Memory : 14.3MB, 55.75%
+# two pointers
 
 class Solution:
     def lengthOfLongestSubstring(self, s: str) -> int:
