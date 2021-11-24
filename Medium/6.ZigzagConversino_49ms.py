@@ -1,5 +1,5 @@
-# 60ms, 71.52%
-# 14.5MB, 46.65%
+# 49ms, 91.90%
+# 14.1MB, 96.77%
 
 class Solution:
     def convert(self, s: str, numRows: int) -> str:
@@ -11,14 +11,13 @@ class Solution:
         i = 0
         back = False
         for c in s:
-            if back and i == 0:
-                back = False
-            if i == numRows - 1:
-                back = True
-
             ans[i] = "".join((ans[i], c))
-            if back:
+            if not back:
+                i += 1
+                if i == numRows - 1:
+                    back = True
+            else:
                 i -= 1
-                continue
-            i += 1
+                if i == 0:
+                    back = False
         return "".join(ans)
