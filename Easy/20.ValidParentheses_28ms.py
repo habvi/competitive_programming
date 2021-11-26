@@ -1,12 +1,10 @@
-# 40ms, 26.75%
-# 14.4MB, 36.71%
+# 28ms, 87.66%
+# 14.4MB, 36.76%
 
 class Solution:
     def isValid(self, s: str) -> bool:
-        if len(s) % 2 == 1:
-            return False
-        pr_l = ("{", "(", "[")
-        pr_r = ("}", ")", "]")
+        pr_l = "{(["
+        pr_r = "})]"
         dq = []
         for k in s:
             if k in pr_l:
@@ -17,7 +15,4 @@ class Solution:
                 if dq[-1] != pr_l[pr_r.index(k)]:
                     return False
                 dq.pop()
-        if dq:
-            return False
-        else:
-            return True
+        return len(dq) == 0
