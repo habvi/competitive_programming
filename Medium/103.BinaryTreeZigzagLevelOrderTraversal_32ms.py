@@ -8,12 +8,11 @@
 #         self.left = left
 #         self.right = right
 class Solution:
-    def __init__(self):
-        self.zigzag = []
     def zigzagLevelOrder(self, root: Optional[TreeNode]) -> List[List[int]]:
         if not root:
             return []
         from collections import deque
+        zigzag = []
         que = deque([])
         que.append(root)
         pr = 0
@@ -26,12 +25,12 @@ class Solution:
                     que.append(v.left)
                 if v.right:
                     que.append(v.right)
-                    
+
             if pr % 2 == 0:
-                self.zigzag.append(res)
+                zigzag.append(res)
             else:
-                self.zigzag.append(res[::-1])
+                zigzag.append(res[::-1])
             pr = 1 - pr
-        return self.zigzag
+        return zigzag
 
 # [1,2,3,4,null,null,5]   [[1],[3,2],[4,5]]
