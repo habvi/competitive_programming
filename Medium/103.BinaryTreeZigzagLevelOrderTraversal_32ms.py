@@ -26,6 +26,7 @@ class Solution:
                     que.append(v.left)
                 if v.right:
                     que.append(v.right)
+                    
             if pr % 2 == 0:
                 self.zigzag.append(res)
             else:
