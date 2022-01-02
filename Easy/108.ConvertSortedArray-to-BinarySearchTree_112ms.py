@@ -8,13 +8,13 @@
 #         self.right = right
 class Solution:
     def sortedArrayToBST(self, nums):
-        def half(l, r):
+        def divide(l, r):
             if l >= r:
                 return None
             m = l + (r - l) // 2
             root = TreeNode(nums[m])
-            root.left = half(l, m)
-            root.right = half(m + 1, r)
+            root.left = divide(l, m)
+            root.right = divide(m + 1, r)
             return root
         n = len(nums)
-        return half(0, n)
+        return divide(0, n)
