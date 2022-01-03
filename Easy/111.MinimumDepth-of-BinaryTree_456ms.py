@@ -1,5 +1,5 @@
-# Runtime: 456 ms, faster than 97.45%
-# Memory Usage: 49.1 MB, less than 70.92%
+# Runtime: 456 ms, faster than 97.45% of Python3 online submissions for Minimum Depth of Binary Tree.
+# Memory Usage: 49.1 MB, less than 70.92% of Python3 online submissions for Minimum Depth of Binary Tree.
 
 # class TreeNode:
 #     def __init__(self, val=0, left=None, right=None):
