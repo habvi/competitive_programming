@@ -10,8 +10,8 @@ class Solution:
                 ans += p2 - p1
         return ans
         
-S = Solution()
-p = [7, 1, 5, 3, 6, 4]
+# S = Solution()
+# p = [7, 1, 5, 3, 6, 4]
 # p = [1, 2, 3, 4, 5]
 # p = [7, 6, 4, 3, 1]
-print(S.maxProfit(p))
+# print(S.maxProfit(p))
