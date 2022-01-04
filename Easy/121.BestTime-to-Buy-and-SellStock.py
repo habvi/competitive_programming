@@ -11,7 +11,7 @@ class Solution:
             hi = max(hi, p)
         return ans      
         
-S = Solution()
-p = [7, 1, 5, 3, 6, 4]
+# S = Solution()
+# p = [7, 1, 5, 3, 6, 4]
 # p = [7, 6, 4, 3, 1]
-print(S.maxProfit(p))
+# print(S.maxProfit(p))
