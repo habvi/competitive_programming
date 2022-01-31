@@ -19,8 +19,8 @@ class Solution:
                 right = mid - 1
 
 
-S = Solution()
-nums = [4,5,6,7,0,1,2]
-nums = [3,4,5,1,2]
-nums = [2, 1]
-print(S.findMin(nums))
+# S = Solution()
+# nums = [4,5,6,7,0,1,2]
+# nums = [3,4,5,1,2]
+# nums = [2, 1]
+# print(S.findMin(nums))
