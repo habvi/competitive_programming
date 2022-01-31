@@ -6,10 +6,10 @@ class Solution:
         n = len(nums)
         
         def divide_and_rule(left, right):
-            mid = (left + right) // 2
-            if right - left <= 1:
+            if right - left == 1:
                 return nums[left]
             
+            mid = (left + right) // 2
             return min(divide_and_rule(left, mid), divide_and_rule(mid, right))
         
         return divide_and_rule(0, n)
