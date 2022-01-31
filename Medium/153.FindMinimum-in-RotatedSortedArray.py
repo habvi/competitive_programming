@@ -8,7 +8,6 @@ class Solution:
         def divide_and_rule(left, right):
             mid = (left + right) // 2
             if right - left <= 1:
-                print(left, right, nums[left])
                 return nums[left]
             
             return min(divide_and_rule(left, mid), divide_and_rule(mid, right))
