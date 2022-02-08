@@ -1,6 +1,8 @@
 # Runtime: 68 ms, faster than 96.27% of Python3 online submissions for Minimum Size Subarray Sum.
 # Memory Usage: 16.7 MB, less than 17.33% of Python3 online submissions for Minimum Size Subarray Sum.
 
+from typing import List
+
 class Solution:
     def minSubArrayLen(self, target: int, nums: List[int]) -> int:
         from collections import deque
@@ -22,5 +24,5 @@ class Solution:
 
 # S = Solution()
 # target = 7
-# nums = [2,3,1,2,4,3]
+# nums = [2, 3, 1, 2, 4, 3]
 # print(S.minSubArrayLen(target, nums))
