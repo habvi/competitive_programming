@@ -8,8 +8,7 @@ import (
 func lengthOfLongestSubstring(s string) int {
 	size := len(s)
 	st := make(map[byte]struct{})
-	right := 0
-	ans := 0
+	var right, ans int
 	for left := 0; left < size; left++ {
 		for right < size {
 			if _, ok := st[s[right]]; ok {
