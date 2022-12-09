@@ -7,20 +7,6 @@ type ListNode struct {
 	Next *ListNode
 }
 
-func set_val(node *ListNode) int {
-	if node != nil {
-		return node.Val
-	}
-	return 0
-}
-
-func move_next(node *ListNode) *ListNode {
-	if node != nil {
-		return node.Next
-	}
-	return node
-}
-
 func addTwoNumbers(l1 *ListNode, l2 *ListNode) *ListNode {
 	ans := new(ListNode)
 	head := true
@@ -28,8 +14,15 @@ func addTwoNumbers(l1 *ListNode, l2 *ListNode) *ListNode {
 
 	node := ans
 	for l1 != nil || l2 != nil || carry != 0 {
-		num1 := set_val(l1)
-		num2 := set_val(l2)
+		var num1, num2 int
+		if l1 != nil {
+			num1 = l1.Val
+			l1 = l1.Next
+		}
+		if l2 != nil {
+			num2 = l2.Val
+			l2 = l2.Next
+		}
 		total := num1 + num2 + carry
 		if head == true {
 			node.Val = total % 10
@@ -39,8 +32,6 @@ func addTwoNumbers(l1 *ListNode, l2 *ListNode) *ListNode {
 			node = node.Next
 		}
 		carry = total / 10
-		l1 = move_next(l1)
-		l2 = move_next(l2)
 	}
 	return ans
 }
@@ -62,4 +53,4 @@ func main() {
 	print_list(addTwoNumbers(&l1, &l2))
 }
 
-// 19ms, 47.9%
+// 17ms, 55.21%

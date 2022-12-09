@@ -15,12 +15,20 @@ public:
     ListNode *addTwoNumbers(ListNode *l1, ListNode *l2) {
         ListNode *ans = new ListNode;
         bool head = true;
-        int carry = 0;
+        int num1, num2, carry = 0;
 
         ListNode *node = ans;
         while (l1 || l2 || carry) {
-            int num1 = l1 ? l1->val : 0;
-            int num2 = l2 ? l2->val : 0;
+            num1 = 0;
+            num2 = 0;
+            if (l1) {
+                num1 = l1->val;
+                l1 = l1->next;
+            }
+            if (l2) {
+                num2 = l2->val;
+                l2 = l2->next;
+            }
             int total = num1 + num2 + carry;
             if (head) {
                 node->val = total % 10;
@@ -30,12 +38,6 @@ public:
                 node = node->next;
             }
             carry = total / 10;
-            if (l1) {
-                l1 = l1->next;
-            }
-            if (l2) {
-                l2 = l2->next;
-            }
         }
         return ans;
     }
@@ -68,4 +70,4 @@ int main(void) {
     return (0);
 }
 
-// 70ms, 41.58%
+// 32ms, 95.57%
