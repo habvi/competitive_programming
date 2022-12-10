@@ -3,10 +3,13 @@
 
 class Solution {
 private:
-    void find_substr(std::string &s, const size_t len, size_t &max_len, size_t &start, int left, int right) {
-        size_t sub_len;
+    std::string s_copy;
+    int len, start, max_len;
 
-        while (0 <= left && right < len && s[left] == s[right]) {
+    void find_substr(int left, int right) {
+        int sub_len;
+
+        while (0 <= left && right < len && s_copy[left] == s_copy[right]) {
             sub_len = right - left + 1;
             if (sub_len > max_len) {
                 start = left;
@@ -18,13 +21,13 @@ private:
     }
 public:
     std::string longestPalindrome(std::string s) {
-        const size_t len = s.size();
-        size_t start;
-        size_t max_len = 0;
+        s_copy = s;
+        len = s.size();
+        max_len = 0;
 
         for (int i = 0; i < len; i++) {
-            find_substr(s, len, max_len, start, i, i); // odd
-            find_substr(s, len, max_len, start, i, i + 1); // even
+            find_substr(i, i); // odd
+            find_substr(i, i + 1); // even
         }
         return s.substr(start, max_len);
     }
