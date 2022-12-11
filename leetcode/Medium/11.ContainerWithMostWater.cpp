@@ -11,7 +11,7 @@ public:
         for (int i = 0; i < height.size(); i++) {
             hi.push_back({height[i], i});
         }
-        sort(hi.begin(), hi.end(), std::greater<std::pair<int, int>>());
+        sort(hi.rbegin(), hi.rend());
         for (auto &[h, i] : hi) {
             if (mn != INF) {
                 ans = std::max(ans, std::abs(i - mn) * h);

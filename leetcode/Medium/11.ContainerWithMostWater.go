@@ -6,25 +6,6 @@ import (
 	"sort"
 )
 
-type Pair struct {
-	Num   int
-	Index int
-}
-
-type Height []Pair
-
-func (v Height) Len() int {
-	return len(v)
-}
-
-func (v Height) Less(i, j int) bool {
-	return v[i].Num < v[j].Num
-}
-
-func (v Height) Swap(i, j int) {
-	v[i], v[j] = v[j], v[i]
-}
-
 func min(x, y int) int {
 	return int(math.Min(float64(x), float64(y)))
 }
@@ -38,26 +19,25 @@ func abs(x int) int {
 
 func maxArea(height []int) int {
 	len := len(height)
-	vector := Height{}
+	vector := [][2]int{}
 	const INF int = 100100
-	mn := INF
-	mx := -INF
+	mn, mx := INF, -INF
 	var ans int
 
 	for i := 0; i < len; i++ {
-		vector = append(vector, Pair{Num: height[i], Index: i})
+		vector = append(vector, [2]int{height[i], i})
 	}
-	sort.Sort(sort.Reverse(vector))
+	sort.Slice(vector, func(i, j int) bool { return vector[i][0] > vector[j][0] })
 	for i := 0; i < len; i++ {
-		h, i := vector[i].Num, vector[i].Index
+		h, idx := vector[i][0], vector[i][1]
 		if mn != INF {
-			ans = max(ans, abs(i-mn)*h)
+			ans = max(ans, abs(idx-mn)*h)
 		}
 		if mx != -INF {
-			ans = max(ans, abs(mx-i)*h)
+			ans = max(ans, abs(mx-idx)*h)
 		}
-		mn = min(mn, i)
-		mx = max(mx, i)
+		mn = min(mn, idx)
+		mx = max(mx, idx)
 	}
 	return ans
 }
@@ -67,4 +47,4 @@ func main() {
 	fmt.Println(maxArea(v))
 }
 
-// 473ms, 5.2%
+// 258ms
