@@ -9,17 +9,14 @@ public:
     bool is_pair(char l, char r) {
         return (l == '(' && r == ')' || l == '{' && r == '}' || l == '[' && r == ']');
     }
-
     bool isValid(string s) {
-        int len = s.size();
         deque<char> stack;
-        for (int i = 0; i < len; i++) {
+
+        for (int i = 0; i < s.size(); i++) {
             if (stack.empty()) {
                 stack.emplace_back(s[i]);
             } else {
-                char l = stack.back();
-                char r = s[i];
-                if (is_pair(l, r)) {
+                if (is_pair(stack.back(), s[i])) {
                     stack.pop_back();
                 } else {
                     stack.emplace_back(s[i]);
