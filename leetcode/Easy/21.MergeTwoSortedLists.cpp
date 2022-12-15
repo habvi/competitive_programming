@@ -14,17 +14,22 @@ struct ListNode {
 
 class Solution {
 public:
-    ListNode* set_val_and_move_next(ListNode *node, ListNode **list) {
-        if (!node) {
-            node = new ListNode{ (*list)->val };
+    void listAddBack(ListNode **node, ListNode **list) {
+        if (!*node) {
+            *node = new ListNode{ (*list)->val };
         } else {
-            node->next = new ListNode{ (*list)->val };
-            node = node->next;
+            (*node)->next = new ListNode{ (*list)->val };
+            *node = (*node)->next;
         }
         if (*list) {
             *list = (*list)->next;
         }
-        return node;
+    }
+    void set_head(ListNode **head, ListNode *node, bool *is_head) {
+        if (*is_head) {
+            *head = node;
+            *is_head = false;
+        }
     }
     ListNode* mergeTwoLists(ListNode* list1, ListNode* list2) {
         ListNode *head = nullptr, *node = nullptr;
@@ -32,28 +37,19 @@ public:
         while (list1 && list2) {
             cout << list1->val << " " << list2->val << endl;
             if (list1->val <= list2->val) {
-                node = set_val_and_move_next(node, &list1);
+                listAddBack(&node, &list1);
             } else {
-                node = set_val_and_move_next(node, &list2);
+                listAddBack(&node, &list2);
             }
-            if (is_head) {
-                head = node;
-                is_head = false;
-            }
+            set_head(&head, node, &is_head);
         }
         while (list1) {
-            node = set_val_and_move_next(node, &list1);
-            if (is_head) {
-                head = node;
-                is_head = false;
-            }
+            listAddBack(&node, &list1);
+            set_head(&head, node, &is_head);
         }
         while (list2) {
-            node = set_val_and_move_next(node, &list2);
-            if (is_head) {
-                head = node;
-                is_head = false;
-            }
+            listAddBack(&node, &list2);
+            set_head(&head, node, &is_head);
         }
         return head;
     }
