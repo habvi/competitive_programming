@@ -25,31 +25,28 @@ public:
             *list = (*list)->next;
         }
     }
-    void set_head(ListNode **head, ListNode *node, bool *is_head) {
-        if (*is_head) {
+    void set_head(ListNode **head, ListNode *node) {
+        if (!*head) {
             *head = node;
-            *is_head = false;
         }
     }
     ListNode* mergeTwoLists(ListNode* list1, ListNode* list2) {
         ListNode *head = nullptr, *node = nullptr;
-        bool is_head = true;
         while (list1 && list2) {
-            cout << list1->val << " " << list2->val << endl;
             if (list1->val <= list2->val) {
                 listAddBack(&node, &list1);
             } else {
                 listAddBack(&node, &list2);
             }
-            set_head(&head, node, &is_head);
+            set_head(&head, node);
         }
         while (list1) {
             listAddBack(&node, &list1);
-            set_head(&head, node, &is_head);
+            set_head(&head, node);
         }
         while (list2) {
             listAddBack(&node, &list2);
-            set_head(&head, node, &is_head);
+            set_head(&head, node);
         }
         return head;
     }
