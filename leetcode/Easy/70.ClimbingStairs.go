@@ -4,6 +4,24 @@ import (
 	"fmt"
 )
 
+func climbStairs(n int) int {
+	dp := make([]int, n+1)
+	dp[0] = 1
+	for i := 0; i <= n; i++ {
+		if i+1 <= n {
+			dp[i+1] += dp[i]
+		}
+		if i+2 <= n {
+			dp[i+2] += dp[i]
+		}
+	}
+	return dp[n]
+}
+
+func main() {
+	fmt.Println(climbStairs(45)) // 1836311903
+}
+
 // TLE ---------------------------------
 // func dfs(n, total int) int {
 // 	if total > n {
@@ -49,21 +67,3 @@ import (
 // 	return int(ans)
 // }
 // -------------------------------------
-
-func climbStairs(n int) int {
-	dp := make([]int, n+1)
-	dp[0] = 1
-	for i := 0; i <= n; i++ {
-		if i+1 <= n {
-			dp[i+1] += dp[i]
-		}
-		if i+2 <= n {
-			dp[i+2] += dp[i]
-		}
-	}
-	return dp[n]
-}
-
-func main() {
-	fmt.Println(climbStairs(45)) // 1836311903
-}
