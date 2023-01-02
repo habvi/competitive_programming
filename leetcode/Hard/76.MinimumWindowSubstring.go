@@ -35,12 +35,12 @@ func minWindow(s string, t string) string {
 	var r, ans_l, ans_r int
 	each_len_t := calc_each_len_t(t)
 	for l := range s {
-		for r < len_s && is_same_map(nums, each_len_t) == false {
+		for r < len_s && !is_same_map(nums, each_len_t) {
 			nums[s[r]] += 1
 			r++
 		}
 		len_nums := r - l
-		if is_same_map(nums, each_len_t) == true && len_nums < min_len {
+		if is_same_map(nums, each_len_t) && len_nums < min_len {
 			ans_l, ans_r = l, r
 			min_len = len_nums
 		}
