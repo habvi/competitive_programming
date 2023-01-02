@@ -5,19 +5,19 @@ package main
 func setZeroes(matrix [][]int) {
 	h := len(matrix)
 	w := len(matrix[0])
-	zero_row := make([]int, h)
-	zero_col := make([]int, w)
+	zero_row := make([]bool, h)
+	zero_col := make([]bool, w)
 	for i := 0; i < h; i++ {
 		for j := 0; j < w; j++ {
 			if matrix[i][j] == 0 {
-				zero_row[i] = 1
-				zero_col[j] = 1
+				zero_row[i] = true
+				zero_col[j] = true
 			}
 		}
 	}
 	for i := 0; i < h; i++ {
 		for j := 0; j < w; j++ {
-			if zero_row[i] == 1 || zero_col[j] == 1 {
+			if zero_row[i] || zero_col[j] {
 				matrix[i][j] = 0
 			}
 		}
