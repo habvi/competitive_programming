@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"sort"
 )
 
 type TreeNode struct {
@@ -11,19 +10,18 @@ type TreeNode struct {
 	Right *TreeNode
 }
 
-func get_all_nodes(nodes *[]int, node *TreeNode) {
+func dfs(nodes *[]int, node *TreeNode) {
 	if node == nil {
 		return
 	}
+	dfs(nodes, node.Left)
 	*nodes = append(*nodes, node.Val)
-	get_all_nodes(nodes, node.Left)
-	get_all_nodes(nodes, node.Right)
+	dfs(nodes, node.Right)
 }
 
 func kthSmallest(root *TreeNode, k int) int {
 	var nodes []int
-	get_all_nodes(&nodes, root)
-	sort.Sort(sort.IntSlice(nodes))
+	dfs(&nodes, root)
 	return nodes[k-1]
 }
 
