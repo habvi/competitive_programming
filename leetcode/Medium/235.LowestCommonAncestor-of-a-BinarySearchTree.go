@@ -22,13 +22,11 @@ func lowestCommonAncestor(root, p, q *TreeNode) *TreeNode {
 	}
 	mn := min(p.Val, q.Val)
 	mx := max(p.Val, q.Val)
-	for root != nil {
+	for !(mn <= root.Val && root.Val <= mx) {
 		if root.Val < mn {
 			root = root.Right
 		} else if root.Val > mx {
 			root = root.Left
-		} else {
-			break
 		}
 	}
 	return root
