@@ -19,11 +19,7 @@ func productExceptSelf(nums []int) []int {
 
 	ans := make([]int, size)
 	for i := 0; i < size; i++ {
-		if from_left[i] == 0 || from_right[i+1] == 0 {
-			ans[i] = 0
-		} else {
-			ans[i] = from_left[i] * from_right[i+1]
-		}
+		ans[i] = from_left[i] * from_right[i+1]
 	}
 	return ans
 }
