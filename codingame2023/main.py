@@ -3,9 +3,12 @@ import math
 from collections import defaultdict, deque
 
 NUM_TARGET = 5
+
 G = defaultdict(list)
 eggs = defaultdict(int)
+all_egg_cell = set()
 crystals = defaultdict(int)
+all_crystal_cell = set()
 
 # amount of hexagonal cells in this map
 number_of_cells = int(input())
@@ -24,8 +27,10 @@ for i in range(number_of_cells):
     # set egg & crytal
     if _type == 1:
         eggs[i] = initial_resources
+        all_egg_cell.add(i)
     elif _type == 2:
         crystals[i] = initial_resources
+        all_crystal_cell.add(i)
 print(G, file=sys.stderr, flush=True)
 print("eggs:", eggs, file=sys.stderr, flush=True)
 print("crystals:", crystals, file=sys.stderr, flush=True)
@@ -101,14 +106,18 @@ for cell, initial_resources in crystals.items():
 crystals_dist_ordered.sort()
 print("crystals_dist_ordered:", crystals_dist_ordered, file=sys.stderr, flush=True)
 
-# egg & crystal dist
+# egg & crystal dist : [far..<crystal>..near, far..<egg>..near]
 dist_ordered = []
-while eggs_dist_ordered or crystals_dist_ordered:
-    if eggs_dist_ordered:
-        dist_ordered.append(eggs_dist_ordered.pop())
-    if crystals_dist_ordered:
-        dist_ordered.append(crystals_dist_ordered.pop())
-dist_ordered.sort(reverse=True)
+while crystals_dist_ordered:
+    dist_ordered.append(crystals_dist_ordered.pop())
+while eggs_dist_ordered:
+    dist_ordered.append(eggs_dist_ordered.pop())
+
+# calc eggs
+total_amount_eggs = sum(v for v in eggs.values())
+print("total amount of eggs:", total_amount_eggs, file=sys.stderr, flush=True)
+get_amount_eggs = int(total_amount_eggs * 0.4)
+print("get amount of eggs:", get_amount_eggs, file=sys.stderr, flush=True)
 
 # ---------------------------------------------------
 # create first candidate cell
@@ -122,6 +131,7 @@ while dist_ordered:
 # game loop
 while True:
     egg_or_crystal_left = [0] * number_of_cells
+    now_egg_total = 0
     for i in range(number_of_cells):
         # resources: the current amount of eggs/crystals on this cell
         # my_ants: the amount of your ants on this cell
@@ -129,6 +139,8 @@ while True:
         resources, my_ants, opp_ants = map(int, input().split())
         print(i, ":", resources, my_ants, opp_ants, file=sys.stderr, flush=True)
         egg_or_crystal_left[i] = resources
+        if i in all_egg_cell:
+            now_egg_total += resources
 
     # Write an action using print
     # WAIT | LINE <sourceIdx> <targetIdx> <strength> | BEACON <cellIdx> <strength> | MESSAGE <text>
@@ -145,6 +157,10 @@ while True:
         if len(cand) == NUM_TARGET:
             break
         _, target_cell = dist_ordered.pop()
+        # if get egg enough, not add cand
+        if (target_cell in all_egg_cell) and (total_amount_eggs - now_egg_total >= get_amount_eggs):
+            continue
+        # still left, append again
         if egg_or_crystal_left[target_cell]:
             cand.append(target_cell)
 
