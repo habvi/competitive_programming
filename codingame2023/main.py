@@ -53,7 +53,8 @@ def print_beacon(output):
         ans.append(idx)
         ans.append(ants)
         ans.append(";")
-    print(*ans)
+    if ans:
+        print(*ans)
 
 def print_line(output):
     ans = []
@@ -63,7 +64,8 @@ def print_line(output):
         ans.append(end)
         ans.append(ants)
         ans.append(";")
-    print(*ans)
+    if ans:
+        print(*ans)
 
 # ---------------------------------------------------
 def bfs(v):
