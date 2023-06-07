@@ -186,7 +186,7 @@ while True:
                 break
             # if less ants for reach, stop
             now_my_ants_total -= dist_from_my_base
-            if (now_my_ants_total <= 0):
+            if (now_my_ants_total < 0):
                 eggs_dist_ordered.append((dist_from_my_base, dist_from_opp_base, target_cell))
                 break
             # still left, append again
@@ -200,7 +200,7 @@ while True:
             dist_from_my_base, dist_from_opp_base, target_cell = crystals_dist_ordered.pop()
             # if less ants for reach, stop
             now_my_ants_total -= dist_from_my_base
-            if (now_my_ants_total <= 0):
+            if (now_my_ants_total < 0):
                 crystals_dist_ordered.append((dist_from_my_base, dist_from_opp_base, target_cell))
                 break
             # still left, append again
