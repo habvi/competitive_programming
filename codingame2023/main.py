@@ -87,18 +87,21 @@ for idx in my_base_index_all:
             closest_base_idx[i] = idx
 
 # ---------------------------------------------------
+# egg dist
 eggs_dist_ordered = []
 for cell, initial_resources in eggs.items():
     eggs_dist_ordered.append((dist[cell], cell))
 eggs_dist_ordered.sort()
 print("eggs_dist_ordered:", eggs_dist_ordered, file=sys.stderr, flush=True)
 
+# crystal dist
 crystals_dist_ordered = []
 for cell, initial_resources in crystals.items():
     crystals_dist_ordered.append((dist[cell], cell))
 crystals_dist_ordered.sort()
 print("crystals_dist_ordered:", crystals_dist_ordered, file=sys.stderr, flush=True)
 
+# egg & crystal dist
 dist_ordered = []
 while eggs_dist_ordered or crystals_dist_ordered:
     if eggs_dist_ordered:
@@ -108,6 +111,7 @@ while eggs_dist_ordered or crystals_dist_ordered:
 dist_ordered.sort(reverse=True)
 
 # ---------------------------------------------------
+# create first candidate cell
 cand = []
 while dist_ordered:
     if len(cand) == NUM_TARGET:
@@ -128,12 +132,15 @@ while True:
 
     # Write an action using print
     # WAIT | LINE <sourceIdx> <targetIdx> <strength> | BEACON <cellIdx> <strength> | MESSAGE <text>
+
+    # erase 0 cell
     for _ in range(NUM_TARGET):
         if cand:
             target_cell = cand.pop()
             if egg_or_crystal_left[target_cell]:
                 cand.insert(0, target_cell)
 
+    # charge next cell
     while dist_ordered:
         if len(cand) == NUM_TARGET:
             break
@@ -141,6 +148,7 @@ while True:
         if egg_or_crystal_left[target_cell]:
             cand.append(target_cell)
 
+    # output
     output = []
     for c in cand:
         output.append((closest_base_idx[c], c, 1))
