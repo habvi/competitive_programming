@@ -136,6 +136,9 @@ cand = []
 
 # game loop
 while True:
+    my_score, opp_score = map(int, input().split())
+    print("my score:", my_score, " / opp score:", opp_score, file=sys.stderr, flush=True)
+
     egg_or_crystal_left = [0] * number_of_cells
     now_egg_total = 0
     now_my_ants_total = 0
