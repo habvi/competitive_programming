@@ -122,16 +122,17 @@ print("get amount of eggs:", get_amount_eggs, file=sys.stderr, flush=True)
 # ---------------------------------------------------
 # create first candidate cell
 cand = []
-while dist_ordered:
-    if len(cand) == NUM_TARGET:
-        break
-    _, target_cell = dist_ordered.pop()
-    cand.append(target_cell)
+# while dist_ordered:
+#     if len(cand) == NUM_TARGET:
+#         break
+#     dist, target_cell = dist_ordered.pop()
+#     cand.append(target_cell)
 
 # game loop
 while True:
     egg_or_crystal_left = [0] * number_of_cells
     now_egg_total = 0
+    now_my_ants_total = 0
     for i in range(number_of_cells):
         # resources: the current amount of eggs/crystals on this cell
         # my_ants: the amount of your ants on this cell
@@ -141,12 +142,14 @@ while True:
         egg_or_crystal_left[i] = resources
         if i in all_egg_cell:
             now_egg_total += resources
+        now_my_ants_total += my_ants
 
     # Write an action using print
     # WAIT | LINE <sourceIdx> <targetIdx> <strength> | BEACON <cellIdx> <strength> | MESSAGE <text>
 
     # erase 0 cell
-    for _ in range(NUM_TARGET):
+    now_cand_len = len(cand)
+    for _ in range(now_cand_len):
         if cand:
             target_cell = cand.pop()
             if egg_or_crystal_left[target_cell]:
@@ -156,7 +159,10 @@ while True:
     while dist_ordered:
         if len(cand) == NUM_TARGET:
             break
-        _, target_cell = dist_ordered.pop()
+        dist_from_my_base, target_cell = dist_ordered.pop()
+        now_my_ants_total -= dist_from_my_base
+        if (now_my_ants_total <= 0):
+            break
         # if get egg enough, not add cand
         if (target_cell in all_egg_cell) and (total_amount_eggs - now_egg_total >= get_amount_eggs):
             continue
