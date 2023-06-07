@@ -109,23 +109,23 @@ for idx in opp_base_index_all:
 eggs_dist_ordered = []
 for cell, initial_resources in eggs.items():
     eggs_dist_ordered.append((min_dist_from_my_base[cell], min_dist_from_opp_base[cell], cell))
-eggs_dist_ordered.sort(reverse=True)
+eggs_dist_ordered.sort()
 print("eggs_dist_ordered:", eggs_dist_ordered, file=sys.stderr, flush=True)
 
 # crystal dist
 crystals_dist_ordered = []
 for cell, initial_resources in crystals.items():
     crystals_dist_ordered.append((min_dist_from_my_base[cell], min_dist_from_opp_base[cell], cell))
-crystals_dist_ordered.sort(reverse=True)
+crystals_dist_ordered.sort()
 print("crystals_dist_ordered:", crystals_dist_ordered, file=sys.stderr, flush=True)
 
 # egg & crystal dist : [far..<crystal>..near, far..<egg>..near]
-# dist_ordered = []
-# while crystals_dist_ordered:
-#     dist_ordered.append(crystals_dist_ordered.pop())
-# while eggs_dist_ordered:
-#     dist_ordered.append(eggs_dist_ordered.pop())
-# print("dist_ordered:", dist_ordered, file=sys.stderr, flush=True)
+dist_ordered = []
+while crystals_dist_ordered:
+    dist_ordered.append(crystals_dist_ordered.pop())
+while eggs_dist_ordered:
+    dist_ordered.append(eggs_dist_ordered.pop())
+print("dist_ordered:", dist_ordered, file=sys.stderr, flush=True)
 
 # calc eggs
 total_amount_eggs = sum(v for v in eggs.values())
@@ -134,11 +134,7 @@ get_amount_eggs = int(total_amount_eggs * 0.4)
 print("get amount of eggs:", get_amount_eggs, file=sys.stderr, flush=True)
 
 # ---------------------------------------------------
-def is_egg_cell(cell):
-    return cell in all_egg_cell
-
 cand = []
-is_egg_end = False
 
 # game loop
 while True:
@@ -167,45 +163,25 @@ while True:
     for _ in range(now_cand_len):
         if cand:
             target_cell = cand.pop()
-            if is_egg_cell(target_cell) and is_egg_end:
-                continue
             if egg_or_crystal_left[target_cell]:
                 cand.insert(0, target_cell)
     print("cand (erase 0):", cand, file=sys.stderr, flush=True)
 
     # charge next cell
-    if not is_egg_end:
-        print("------------ egg -------------------", file=sys.stderr, flush=True)
-        while eggs_dist_ordered:
-            if len(cand) == 2:
-                break
-            dist_from_my_base, dist_from_opp_base, target_cell = eggs_dist_ordered.pop()
-            # if get egg enough, not add cand
-            if total_amount_eggs - now_egg_total >= get_amount_eggs:
-                is_egg_end = True
-                break
-            # if less ants for reach, stop
-            now_my_ants_total -= dist_from_my_base
-            if (now_my_ants_total < 0):
-                eggs_dist_ordered.append((dist_from_my_base, dist_from_opp_base, target_cell))
-                break
-            # still left, append again
-            if egg_or_crystal_left[target_cell]:
-                cand.append(target_cell)
-    else:
-        print("------------ crystal -------------------", file=sys.stderr, flush=True)
-        while crystals_dist_ordered:
-            if len(cand) == 5:
-                break
-            dist_from_my_base, dist_from_opp_base, target_cell = crystals_dist_ordered.pop()
-            # if less ants for reach, stop
-            now_my_ants_total -= dist_from_my_base
-            if (now_my_ants_total < 0):
-                crystals_dist_ordered.append((dist_from_my_base, dist_from_opp_base, target_cell))
-                break
-            # still left, append again
-            if egg_or_crystal_left[target_cell]:
-                cand.append(target_cell)
+    while dist_ordered:
+        if len(cand) == NUM_TARGET:
+            break
+        dist_from_my_base, dist_from_opp_base, target_cell = dist_ordered.pop()
+        now_my_ants_total -= dist_from_my_base
+        if (now_my_ants_total <= 0):
+            dist_ordered.append((dist_from_my_base, dist_from_opp_base, target_cell))
+            break
+        # if get egg enough, not add cand
+        if (target_cell in all_egg_cell) and (total_amount_eggs - now_egg_total >= get_amount_eggs):
+            continue
+        # still left, append again
+        if egg_or_crystal_left[target_cell]:
+            cand.append(target_cell)
     print("cand:", cand, file=sys.stderr, flush=True)
 
     # output
